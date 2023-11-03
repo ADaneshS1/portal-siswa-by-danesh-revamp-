@@ -34,7 +34,7 @@ export default function registrasi() {
   }
 
   return (
-    <div
+    <div className={styles.font}
       style={{
         display: "flex",
         justifyContent: "center",
