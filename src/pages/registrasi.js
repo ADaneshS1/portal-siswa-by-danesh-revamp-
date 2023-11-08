@@ -1,13 +1,17 @@
 import styles from "@/styles/reglog.module.css";
 import { useState } from "react";
+import { useRouter } from "next/navigation";  
 
 export default function registrasi() {
+  const router = useRouter();
+
   const [name, setName] = useState('');
   const [nis, setNis] = useState('');
   const [password, setPassword] = useState('');
 
   const handleRegistration = async () => {
     const data = { name, nis, password };
+    console.log('click daftar by: ', data);
 
     try {
       const res = await fetch('/api/registrasi', {
@@ -18,13 +22,16 @@ export default function registrasi() {
         },
       });
 
+      const responseData = await res.json(); // Mendapatkan data JSON dari respons
+
       if (res.ok) {
         // Periksa apakah respons memiliki status code 200 (OK)
-        const responseData = await res.json(); // Mendapatkan data JSON dari respons
         console.log(responseData);
-        console.log('Data sudah sukses didaftarkan');
+        alert('Data sudah sukses didaftarkan');
+        router.push('/login')
       } else {
-        console.log('Gagal melakukan permintaan:', res.status);
+        console.error('Gagal melakukan permintaan:', res.status);
+        console.log(responseData);
         alert('Data gagal didaftarkan');
       }
     } catch (error) {
@@ -92,6 +99,7 @@ export default function registrasi() {
                 padding: "10px 5px",
                 border: "2px solid silver"
               }}
+              type="password"
               placeholder="*******"
               onChange={(e) => {
                 setPassword(e.target.value)

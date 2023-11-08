@@ -52,7 +52,7 @@ export default async function handler(req, res) {
 
     // lengkapi data yg kurang
     const token = generateRandomToken(10);
-    setCookie('token',token, {req,res,maxAge:60*60*24*30})
+    setCookie('token',token, {req,res,maxAge:60*60*24*7})
 
     // jika sudah sesuai simpan
     const users = await User.findOneAndUpdate(
