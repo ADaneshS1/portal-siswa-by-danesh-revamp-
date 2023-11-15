@@ -1,15 +1,16 @@
 import styles from "@/styles/reglog.module.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";  
 
-export default function registrasi() {
+export default function login() {
   const router = useRouter();
 
   const [nis, setNis] = useState('');
   const [password, setPassword] = useState('');
+  const [isKeepLogin, setKeepLogin] = useState(false);
 
   const handleRegistration = async () => {
-    const data = { nis, password };
+    const data = { nis, password, isKeepLogin };
     console.log('click daftar by: ', data);
 
     try {
@@ -25,8 +26,15 @@ export default function registrasi() {
 
       if (res.ok) {
         // Periksa apakah respons memiliki status code 200 (OK)
-        console.log(responseData);
+        console.log('responsData: ',responseData);
+        localStorage.setItem('keepLogin', responseData.isKeepLogin)
+
+        if(!responseData.isKeepLogin) {
+          sessionStorage.setItem('token',responseData.token)
+        }
+
         alert('Berhasil login');
+        router.push('/dashboard');
       } else {
         console.error('Gagal melakukan permintaan:', res.status);
         console.log(responseData)
@@ -89,6 +97,19 @@ export default function registrasi() {
                 setPassword(e.target.value)
               }}
             />
+
+            <div>
+              <input
+                type="checkbox"
+                onChange={(e) => {
+                  console.log(e.target.checked);
+                  let isChecked = e.target.checked;
+                  localStorage.setItem('keepLogin', isChecked);
+                  setKeepLogin(isChecked);
+                }}
+              ></input>
+              <span> Keep Me Logged In</span>
+            </div>
 
             <button
               className={styles.bodra}

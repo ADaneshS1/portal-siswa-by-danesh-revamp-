@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import { generateRandomToken } from "@/token/randomToken";
 import {connectionDB} from "@/db/mongodb"
 import User from "@/models/users"
@@ -12,7 +11,7 @@ export default async function handler(req, res) {
       return res.status(405) .json({ error: true, message: 'mehtod tidak diijinkan' });
     }
     
-    const { nis, password } = req.body;
+    const { nis, password,isKeepLogin } = req.body;
 
     if (!nis) {
       return res.status(400).json({ error: true, message: 'tidak ada NIS' });
@@ -52,7 +51,10 @@ export default async function handler(req, res) {
 
     // lengkapi data yg kurang
     const token = generateRandomToken(10);
-    setCookie('token',token, {req,res,maxAge:60*60*24*7})
+
+    if (isKeepLogin) {
+      setCookie('token', token, { req, res, maxAge: 60 * 60 * 24 * 30 }); // 1 bulan
+    }
 
     // jika sudah sesuai simpan
     const users = await User.findOneAndUpdate(
@@ -63,7 +65,7 @@ export default async function handler(req, res) {
     console.log('users after update: ', users);
 
     // kasih tahu client (hanya data yg diperbolehkan)
-    return res.status(200).json({ token });
+    return res.status(200).json({ token, isKeepLogin: !!isKeepLogin });
   } catch (error) {
     console.log('error:', error);
     res.status(500).json({ error: true, message: 'ada masalah harap hubungi developer' });

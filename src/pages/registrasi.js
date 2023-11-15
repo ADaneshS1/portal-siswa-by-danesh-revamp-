@@ -23,15 +23,14 @@ export default function registrasi() {
       });
 
       const responseData = await res.json(); // Mendapatkan data JSON dari respons
+      console.log(responseData);
+      alert('Data sudah sukses didaftarkan');
 
       if (res.ok) {
         // Periksa apakah respons memiliki status code 200 (OK)
-        console.log(responseData);
-        alert('Data sudah sukses didaftarkan');
         router.push('/login')
       } else {
         console.error('Gagal melakukan permintaan:', res.status);
-        console.log(responseData);
         alert('Data gagal didaftarkan');
       }
     } catch (error) {
@@ -70,6 +69,7 @@ export default function registrasi() {
                 border: "2px solid silver"
               }}
               placeholder="Abdullah Ihsan"
+              value={name}
               onChange={(e) => {
                 setName(e.target.value)
               }}
@@ -85,6 +85,7 @@ export default function registrasi() {
                 border: "2px solid silver"
               }}
               placeholder="12345"
+              value={nis}
               onChange={(e) => {
                 setNis(e.target.value)
               }}
@@ -101,6 +102,7 @@ export default function registrasi() {
               }}
               type="password"
               placeholder="*******"
+              value={password}
               onChange={(e) => {
                 setPassword(e.target.value)
               }}
