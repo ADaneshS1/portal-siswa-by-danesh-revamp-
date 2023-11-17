@@ -1,4 +1,4 @@
-import { generateRandomToken } from "@/token/randomToken";
+import { generateRandomToken } from "@/utils/randomToken";
 import {connectionDB} from "@/db/mongodb"
 import User from "@/models/users"
 import { getCookies, getCookie, setCookie, deleteCookie } from 'cookies-next';

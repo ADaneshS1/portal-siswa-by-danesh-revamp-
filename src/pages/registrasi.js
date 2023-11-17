@@ -123,6 +123,11 @@ export default function registrasi() {
             >
               Registrasi
             </button>
+
+            <div>
+              <p>Sudah punya akun? <a href="/registrasi" style={{color:"blue"}}>Login sekarang</a> </p>
+            </div>
+
           </div>
         </div>
       </div>

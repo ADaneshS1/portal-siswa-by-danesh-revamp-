@@ -20,15 +20,25 @@ const userSchema = new mongoose.Schema({
     token: {
       type: String,
       default:'',
-    }
+    },
+    role: {
+      // 0: santri/anggota, 1: adalah admin
+      type: Number,
+      default: 0,
+    },
+    status: {
+      // 0: tidak aktif, sedangkan 1: aktif
+      type: Number,
+      default: 1,
+    },
   });
 
   let userModel;
   // fix overwrite user
-  if (mongoose.models.Members) {
-    userModel = mongoose.model('Members');
+  if (mongoose.models.Userr) {
+    userModel = mongoose.model('Userr');
   } else {
-    userModel = mongoose.model('Members', userSchema);
+    userModel = mongoose.model('Userr', userSchema);
   }
 
 export default userModel

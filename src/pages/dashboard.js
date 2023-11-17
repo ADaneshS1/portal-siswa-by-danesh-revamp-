@@ -2,10 +2,12 @@ import styles from "@/styles/reglog.module.css";
 import { getCookie } from 'cookies-next';
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";  
+import { getDataApi, postDataApi } from '@/utils/api';
 
 export default function dashboard() {
   const router = useRouter();
   const [user, setUser] = useState({id:'',name:''});
+  const [allUsers, setAllUsers] = useState([]);
 
   const handleRegistration = async () => {
           let myToken = '';
@@ -18,26 +20,20 @@ export default function dashboard() {
           }
           if (myToken) {
             const data = { token: myToken };
-            const res = await fetch('/api/logout', {
-              method: 'POST', // Corrected the typo in 'method'
-              body: JSON.stringify(data), // Assuming 'data' is an object that you want to send as JSON
-              headers: {
-                'Content-Type': 'application/json', // Specifying the content type as JSON
+            await postDataApi(
+              '/api/logout',
+              data,
+              (successData) => {
+                router.push('/login');
               },
-            });
-
-          if (res.ok) {
-            // Periksa apakah respons memiliki status code 200 (OK)
-            const responseData = await res.json(); // Mendapatkan data JSON dari respons
-            console.log(responseData);
+              (failData) => {
+                console.error('Gagal melakukan permintaan:', failData);
+                alert('terjadi kesalahan koneksi ' + failData);
+              }
+            );
+          } else {
             router.push('/login');
-            } else {
-                console.error('Gagal melakukan permintaan:', res.status);
-                alert('terjadi kesalahan koneksi');
-            }
-                } else {
-                    router.push('/login');
-                }
+          }
   }
 
   useEffect(() => {
@@ -52,29 +48,45 @@ export default function dashboard() {
 
         if (myToken) {
           const data = { token: myToken };
-          const res = await fetch('/api/check-token', {
-            method: 'POST', // Corrected the typo in 'method'
-            body: JSON.stringify(data), // Assuming 'data' is an object that you want to send as JSON
-            headers: {
-              'Content-Type': 'application/json', // Specifying the content type as JSON
-            },
-          });
 
-          if (res.ok) {
-            // Periksa apakah respons memiliki status code 200 (OK)
-            const responseData = await res.json(); // Mendapatkan data JSON dari respons
-            console.log(responseData);
-            setUser(responseData);
-          } else {
-            console.error('Gagal melakukan permintaan:', res.status);
-            router.push('/login');
+          let myUser;
+          await postDataApi(
+            '/api/check-token',
+            data,
+            (successData) => {
+              let roleName = '';
+              switch (successData.role) {
+                case 0:
+                  roleName = 'Santri';
+                  break;
+                case 1:
+                  roleName = 'Admin';
+                  break;
+              }
+              myUser = { ...successData, roleName };
+              setUser(myUser);
+            },
+            (failData) => {
+              console.log('failData: ', failData);
+              router.push('/login');
+            }
+          );
+
+          if (myUser && myUser.role === 1) {
+            await getDataApi(
+              '/api/list-user',
+              (dataSuccess) => {
+                console.log('dataSuccess: ', dataSuccess);
+                setAllUsers(dataSuccess.users);
+              },
+              (dataFail) => {
+                console.log('dataFail: ', dataFail);
+              }
+            );
           }
-        } else {
-          router.push('/login');
         }
       } catch (error) {
         console.log('error: ', error);
-        // alert('Terjadi Kesalahan, harap hubungi team support');
       }
     };
 
@@ -92,7 +104,6 @@ export default function dashboard() {
         minHeight: "80vh"
       }}
     >
-
         <div>
             <h4>Nama:</h4>
             <p>{user.name}</p>
@@ -109,6 +120,44 @@ export default function dashboard() {
             >
               Logout
             </button>
+        </div>
+
+        <div>
+        <span style={{ fontWeight: '700', fontSize: '28px' }}>
+            {user.name}({user.roleName})
+          </span>
+        </div>
+        <div style={{ padding: '32px' }}>
+          <div>Data User</div>
+          <div style={{ width: '100%' }}>
+            <table
+              style={{
+                width: '100%',
+                backgroundColor: '#fff',
+                border: '1px',
+              }}
+            >
+              <thead>
+                <tr>
+                  <th>NIS</th>
+                  <th>Name</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {allUsers &&
+                  allUsers.map((data, index) => {
+                    return (
+                      <tr key={index} style={{ padding: '8px' }}>
+                        <td>{data.nis}</td>
+                        <td>{data.name}</td>
+                        <td>{data.status}</td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
+          </div>
         </div>
         
     </div>

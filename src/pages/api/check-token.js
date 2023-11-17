@@ -29,7 +29,7 @@ export default async function handler(req, res) {
         }
     
         // kasih tahu client (hanya data yg diperbolehkan)
-        return res.status(200).json({ id: user.id, nis: user.nis, name:user.name });
+        return res.status(200).json({ id: user.id, nis: user.nis, name:user.name,role: user.role,status: user.status, });
       } catch (error) {
         console.log('error:', error);
         res.status(500).json({ error: true, message: 'ada masalah harap hubungi developer' });
