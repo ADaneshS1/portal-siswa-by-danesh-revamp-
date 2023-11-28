@@ -9,7 +9,7 @@ module.exports = {
     return [
       {
         source: '/',
-        destination: '/registrasi',
+        destination: '/login',
         permanent: false,
       },
     ];

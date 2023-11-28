@@ -51,53 +51,58 @@ export default function login() {
       style={{
         display: "flex",
         justifyContent: "center",
-        alignItems: "center",
-        minHeight: "80vh"
+        alignItems: "center"
       }}
     >
       <div style={{
+        border:"solid silver 2px",
         boxShadow: "rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px",
         color: "black",
         borderRadius: "8px",
         padding: "20px",
-        width: "50%"
+        width: "40%"
       }}>
+
         <div>
           <h2>Login</h2>
 
-          <div style={{ display: "flex", flexDirection: "column", marginRight: "20px", marginTop: "20px", gap: "10px" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
 
-            <h3 className={styles.h3}>NIS <span style={{ color: 'blue' }}>*</span> </h3>
-            <input
-              className={styles.bodra}
-              style={{
-                width: "70%",
-                marginTop: "4px",
-                padding: "10px 5px",
-                border: "2px solid silver"
-              }}
-              placeholder="12345"
-              onChange={(e) => {
-                setNis(e.target.value)
-              }}
-            />
+            <div>
+              <h3 className={styles.h3}>NIS <span style={{ color: 'blue' }}>*</span> </h3>
+              <input
+                className={styles.bodra}
+                style={{
+                  width: "70%",
+                  marginTop: "4px",
+                  padding: "10px 5px",
+                  border: "2px solid silver"
+                }}
+                placeholder="12345"
+                onChange={(e) => {
+                  setNis(e.target.value)
+                }}
+              />
+            </div>
 
-            <h3 className={styles.h3}>Password <span style={{ color: 'blue' }}>*</span> </h3>
-            <input
-              className={styles.bodra}
-              style={{
-                width: "70%",
-                marginTop: "4px",
-                padding: "10px 5px",
-                border: "2px solid silver"
-              }}
-              type="password"
-              placeholder="*******"
-              onChange={(e) => {
-                setPassword(e.target.value)
-              }}
-            />
-
+            <div>
+              <h3 className={styles.h3}>Password <span style={{ color: 'blue' }}>*</span> </h3>
+              <input
+                className={styles.bodra}
+                style={{
+                  width: "70%",
+                  marginTop: "4px",
+                  padding: "10px 5px",
+                  border: "2px solid silver"
+                }}
+                type="password"
+                placeholder="*******"
+                onChange={(e) => {
+                  setPassword(e.target.value)
+                }}
+              />
+            </div>
+        
             <div>
               <input
                 type="checkbox"

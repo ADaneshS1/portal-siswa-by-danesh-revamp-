@@ -125,7 +125,7 @@ export default function registrasi() {
             </button>
 
             <div>
-              <p>Sudah punya akun? <a href="/registrasi" style={{color:"blue"}}>Login sekarang</a> </p>
+              <p>Sudah punya akun? <a href="/login" style={{color:"blue"}}>Login sekarang</a> </p>
             </div>
 
           </div>
