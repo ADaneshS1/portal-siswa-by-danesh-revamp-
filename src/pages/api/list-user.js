@@ -67,8 +67,6 @@ export default async function handler(req,res) {
     });
   } catch (error) {
     console.log('error:', error);
-    res
-      .status(500)
-      .json({ error: true, message: 'ada masalah harap hubungi developer' });
+    res.status(500).json({ error: true, message: 'ada masalah harap hubungi developer' });
   }
 }

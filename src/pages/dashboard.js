@@ -48,7 +48,6 @@ export default function dashboard() {
 
         if (myToken) {
           const data = { token: myToken };
-
           let myUser;
           await postDataApi(
             '/api/check-token',
@@ -127,8 +126,8 @@ export default function dashboard() {
             {user.name}({user.roleName})
           </span>
         </div>
+
         <div style={{ padding: '32px' }}>
-          <div>Data User</div>
           <div style={{ width: '100%' }}>
             <table
               style={{
@@ -137,13 +136,6 @@ export default function dashboard() {
                 border: '1px',
               }}
             >
-              <thead>
-                <tr>
-                  <th>NIS</th>
-                  <th>Name</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
               <tbody>
                 {allUsers &&
                   allUsers.map((data, index) => {
