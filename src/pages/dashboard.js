@@ -83,6 +83,8 @@ export default function dashboard() {
               }
             );
           }
+        } else {
+          router.push('/login');
         }
       } catch (error) {
         console.log('error: ', error);

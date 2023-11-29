@@ -1,8 +1,7 @@
 import {connectionDB} from "@/db/mongodb"
-import User from "@/models/users"
 import Tasks from "@/models/tasks"
+import User from "@/models/users"
 import { getCookies, getCookie, setCookie, deleteCookie } from 'cookies-next';
-import taskModel from "@/models/tasks";
 
 connectionDB();
 
@@ -32,10 +31,11 @@ export default async function handler(req,res) {
             return res.status(400).json({ error: true, message: 'Anda tidak memiliki hak akses'})
         }
 
-        // const {date,deadline,link,note} = req.body;
-        // const data = {date, deadline, link, teacher_id: user.id, status:1 , note}
-        const tasks = await Tasks.find();
-        console.log(tasks)
+        const tasksId = req.query.id
+        const tasks = await Tasks.findOne();
+        if(!tasksId) {
+            return res.status(400).json({ error: true, message: 'Id tugas tidak diberikan'})
+        }
 
         return res.status(201).json({tasks})
 
