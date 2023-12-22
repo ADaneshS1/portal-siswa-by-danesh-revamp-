@@ -43,9 +43,6 @@ export default async function handler(req,res) {
                 .json({ error: true, message: "Tugas tidak ditemukan" });
         }
 
-      
-        
-
         return res.status(201).json({message:"Tugas sudah di hapus"})
 
     } catch(err) {

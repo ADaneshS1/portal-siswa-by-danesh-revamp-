@@ -45,7 +45,7 @@ export default async function handler(req, res) {
     if (!user || !user.nis) {
       return res.status(400).json({
         error: true,
-        message: 'user tidak ditemukan',
+        message: 'user tidak ditemukan'
       });
     }
 

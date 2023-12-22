@@ -2,7 +2,7 @@ import styles from "@/styles/reglog.module.css";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";  
 
-export default function login() {
+export default function Login() {
   const router = useRouter();
 
   const [nis, setNis] = useState('');

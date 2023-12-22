@@ -2,7 +2,7 @@ import styles from "@/styles/reglog.module.css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";  
 
-export default function registrasi() {
+export default function Registrasi() {
   const router = useRouter();
 
   const [name, setName] = useState('');

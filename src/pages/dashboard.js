@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";  
 import { getDataApi, postDataApi } from '@/utils/api';
 
-export default function dashboard() {
+export default function Dashboard() {
   const router = useRouter();
   const [user, setUser] = useState({id:'',name:''});
   const [allUsers, setAllUsers] = useState([]);
